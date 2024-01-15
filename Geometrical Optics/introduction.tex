@@ -1,0 +1,50 @@
+% camiregu 2024-jan-14
+\chapter{Introduction}
+
+%----------------------------------------------------------------------------------------
+\section{Objectives}
+\paragraph{}
+This experiment was first performed in 1914 when it showed the quantum property atoms that they may only gain energy in discrete chunks. By firing electrons at these atoms at slowly increasing energy, they were able to detect which electron energies corresponded to energy transfers to the He atoms. As it happens, when graphed, the peaks in energy were consistent with the quantum energy level measurements from spectroscopy.
+
+\section{Finding the Accelerating Energy}
+\paragraph{}
+Observations of the accelerating energy were only made indirectly by conversion to electric potential and scaling by some constant of proportionality. Luckily, the maximum and minimum energies were set manually and so these two points in particular are known values. Thus, the effective proportionality constant can be approximated by comparing these known values to the minimum and maximum measured potentials. This approximated constant can then be used to convert all the raw potential data into measurements of the accelerating energy.
+
+\paragraph{Effective proportionality constant.}
+By rearranging $E = kV$ and taking the average of the two pairs of measurements, the effective proportionality constant is found by
+
+\newequation{proportionalityconstant}{k_\text{eff}}
+{4}{\frac{1}{2} \left(\frac{#1}{#3} + \frac{#2}{#4}\right)}
+{{E_\text{min}}{E_\text{max}}{V_i}{V_f}}
+
+where $E_{\text{max}}, E_{\text{min}}$ are the maximum and minimum energies set, respectively, and $V_i, V_f$ are the final and initial potentials measured over the region of interest, respectively.
+
+\section{Linear Fits of Noisy Data}
+\paragraph{}
+The noise in the measured data makes it an inconvenient dataset for analytical techniques like graphing and extrapolation, which will both be used to confirm the consistency of the results with the expected values from spectroscopy. Instead, the Least Squares Method (LSM) will be used to fit linear functions to the data when appropriate. These functions, not the raw data, will ultimately be the basis of the analysis.
+
+\paragraph{Delta calculation.}
+To facilitate the slope and intercept calculations, we will first calculate a special factor
+\begin{equation} 
+    \Delta = N \sum_{i=1}^N x_i^2 - \left(\sum_{i=1}^N x_i\right)^2, \label{eqn:Delta}
+\end{equation}
+where $N$ is the total number of $(x,y)_i$ data points in the region being fitted.
+
+\paragraph{Slope and intercept calculation.}
+Then, with all variables as in Equation \ref{eqn:Delta}, we have
+\begin{align}
+    m &= \frac{1}{\Delta} \left(N \sum_{i=1}^N x_i y_i - \sum_{i=1}^N x_i \sum_{i=1}^N y_i\right) \text{, and} \label{eqn:slope} \\
+    b &= \frac{1}{\Delta} \left(\sum_{i=1}^N x_i^2 \sum_{i=1}^N y_i - \sum_{i=1}^N x_i \sum_{i=1}^N x_i y_i\right) \label{eqn:intercept}
+\end{align}
+where $m, b$, are the slope and y-intercept of the linear fit, respectively.
+
+\section{Determining Point of Intersection}
+\paragraph{}
+Finally, the primary functions to be analyzed are the Poisson and Gaussian probability distribution function. These functions will be fit to our data, and used to generate predictions of how many times we should expect to see a particular count.
+\paragraph{Probability distribution functions.}
+The probabilities of counting $n$ gamma rays according to the Poisson and Gaussian equations are
+\begin{align} 
+    p_{n, P} \left(\alpha\right) &= \frac{\alpha^n e^{-\alpha}}{\Gamma \left(n + 1\right)} \text{, and} \label{eqn:poisson-pdf} \\
+    p_{n, G} \left(\alpha\right) &= \frac{1}{\sqrt{2 \pi \alpha}} e^{\frac{-\left(n - \alpha\right)^2}{2 \alpha}}, \label{eqn:gaussian-pdf}
+\end{align}
+respectively. Here, $\alpha$ is a parameter that should physically correspond to the mean and variance of the dataset (which should be approximately equal, as discussed in the previous section.)
