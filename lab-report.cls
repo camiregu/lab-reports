@@ -19,11 +19,15 @@
 \RequirePackage{geometry}
 % for heading formatting
 \RequirePackage{titlesec}
-% for images and graphs
+% for images, graphs, figures
 \RequirePackage{graphicx}
+\RequirePackage{siunitx}
+\RequirePackage{tabularx}
 \RequirePackage{caption}
+% pgf packages for loops and plots
+% \RequirePackage{pgffor}
 % \RequirePackage{pgfplots}
-% AMS Packages for environments, shortcuts, and fonts
+% ams packages for environments, shortcuts, and fonts
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
 % for enumerated lists
@@ -35,8 +39,6 @@
 % for pretty colors
 \RequirePackage{tcolorbox}
 \tcbuselibrary{most}
-% for units
-\RequirePackage{siunitx}
 
 
 %%% Fix chapter heading
@@ -72,9 +74,13 @@
     \newpage
 }
 
+% Define typographic struts, as suggested by Claudio Beccari in an article in TeX and TUG News, Vol. 2, 1993.
+\newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
+\newcommand\Bstrut{\rule[-1.4ex]{0pt}{0pt}}   % = `bottom' strut
+
 %%% Commands for Lab Report elements
-% Usage: \newequation{<label>}{<symbol>}{<varnum>}{<eqn>}{<varsymbols>}
-\newcommand{\newequation}[5]{%
+% Usage: \lrequation{<label>}{<symbol>}{<varnum>}{<eqn>}{<varsymbols>}
+\newcommand{\lrequation}[5]{%
     % Usage: \#1eqn{<var1>}{<var2>}{<var3>}...
     \expandafter\newcommand\csname #1eqn\endcsname[#3]{#4}
 
@@ -83,7 +89,7 @@
     \end{equation}
 
     % Usage: \#1sample[<symbol>]{<finalanswer>}{{<val1>}{<val2>}{<val3>}...}
-    \expandafter\newcommand\csname #1sample\endcsname%
+    \expandafter\newcommand\csname #1lrsample\endcsname%
     [3][#2]%
     {%
         \begin{align*}
@@ -94,7 +100,7 @@
     }
 }
 
-% Usage:  \lrfigure[<scale>]{<label>}{<caption>}
+% Usage: \lrfigure[<scale>]{<label>}{<caption>}
 \newcommand{\lrfigure}[3][1]
 {
     \begin{figure}[!htbp] \label{fig:#2}
@@ -104,6 +110,19 @@
     \end{figure}
 }
 
-\newenvironment{lrtable}
-{}
-{}
+% Usage: \begin{lrtable}[<placement options>]{<label>}{<caption>}{<numcolumns>}{<titles>}{<data>}
+\newcommand{\lrtable}[6][!hp]
+{
+\begin{table}[#1]
+\centering
+\begin{tabular}{|| *{#4}{c} ||}
+    \hline %
+    \Tstrut#5\Bstrut\\ %
+    \hline\hline %
+    \Tstrut#6\Bstrut\\ %
+    \hline %
+\end{tabular}
+\caption{#3}
+\label{tab:#2}
+\end{table}
+}
