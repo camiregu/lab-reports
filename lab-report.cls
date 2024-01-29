@@ -8,7 +8,7 @@
 %%% Class options
 % Inherit options of book
 \DeclareOption*{
-    \PassOptionsToClass{\CurrentOption}{book}
+    \PassOptionsToClass{\CurrentOption}{report}
 }
 \ProcessOptions\relax
 \LoadClass{report}
@@ -17,6 +17,7 @@
 %%% 3rd party packages
 % for page formatting
 \RequirePackage{geometry}
+\RequirePackage{multicol}
 % for heading formatting
 \RequirePackage{titlesec}
 % for images, graphs, figures
@@ -126,3 +127,7 @@
 \label{tab:#2}
 \end{table}
 }
+
+\newenvironment{lrapparatus}
+{\begin{multicols}{2} \begin{itemize}}
+{\end{itemize} \end{multicols}}
