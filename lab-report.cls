@@ -20,8 +20,12 @@
 \RequirePackage{multicol}
 % for heading formatting
 \RequirePackage{titlesec}
-% for images, graphs, figures
-\RequirePackage{graphicx}
+% for images
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+% for units and tables
 \RequirePackage{siunitx}
 \RequirePackage{tabularx}
 \RequirePackage{caption}
@@ -101,17 +105,19 @@
     }
 }
 
-% Usage: \lrfigure[<scale>]{<label>}{<caption>}
-\newcommand{\lrfigure}[3][1]
+% Usage: \lrfigure[placement]{<label>}{<caption>}
+\newcommand{\lrfigure}[3][!hp]
 {
-    \begin{figure}[!htbp] \label{fig:#2}
+    \begin{figure}[#1]
         \centering
-        \includegraphics[scale=#1]{\Experiment/Images/#2.png}
+        \def\svgwidth{\columnwidth}
+        \import{\Experiment/Images/}{#2.pdf_tex}
         \caption{#3}
+        \label{fig:#2}
     \end{figure}
 }
-
-% Usage: \begin{lrtable}[<placement options>]{<label>}{<caption>}{<numcolumns>}{<titles>}{<data>}
+ 
+% Usage: \begin{lrtable}[<placement>]{<label>}{<caption>}{<numcolumns>}{<titles>}{<data>}
 \newcommand{\lrtable}[6][!hp]
 {
 \begin{table}[#1]
