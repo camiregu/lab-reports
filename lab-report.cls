@@ -29,9 +29,8 @@
 \RequirePackage{siunitx}
 \RequirePackage{tabularx}
 \RequirePackage{caption}
-% pgf packages for loops and plots
-% \RequirePackage{pgffor}
-% \RequirePackage{pgfplots}
+% pgf packages for plots
+\RequirePackage{pgfplots}
 % ams packages for environments, shortcuts, and fonts
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
@@ -93,8 +92,8 @@
         #2 = \csname #1eqn\endcsname#5
     \end{equation}
 
-    % Usage: \#1sample[<symbol>]{<finalanswer>}{{<val1>}{<val2>}{<val3>}...}
-    \expandafter\newcommand\csname #1lrsample\endcsname%
+    % Usage: \lrsample#1[<symbol>]{<finalanswer>}{{<val1>}{<val2>}{<val3>}...}
+    \expandafter\newcommand\csname lrsample#1\endcsname%
     [3][#2]%
     {%
         \begin{align*}
@@ -106,7 +105,7 @@
 }
 
 % Usage: \lrfigure[placement]{<label>}{<caption>}
-\newcommand{\lrfigure}[3][!hp]
+\newcommand{\lrfigure}[3][!htbp]
 {
     \begin{figure}[#1]
         \centering
@@ -118,7 +117,7 @@
 }
  
 % Usage: \begin{lrtable}[<placement>]{<label>}{<caption>}{<numcolumns>}{<titles>}{<data>}
-\newcommand{\lrtable}[6][!hp]
+\newcommand{\lrtable}[6][!htbp]
 {
 \begin{table}[#1]
 \centering

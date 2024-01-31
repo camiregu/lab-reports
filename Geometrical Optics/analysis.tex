@@ -4,11 +4,331 @@
 %----------------------------------------------------------------------------------------
 
 \section{Distant Object}
+Since the focal length for this method is the same as the image distance, which was directly measured, we simply take the focal length to be the average of the measurements recorded in \cref{tab:infinityobject}:
+
+\begin{align*}
+    f_\text{DO} &= \frac{\sum s_i}{N} \\
+    &= \frac{\qty{200}{\milli\metre} + \qty{190}{\milli\metre} + \qty{195}{\milli\metre} + \qty{190}{\milli\metre} + \qty{200}{\milli\metre}}{5} \\
+    &= \qty{195}{\milli\metre}
+\end{align*}
+
+Now the reading error of the ruler was $\qty{0.5}{\milli\metre}$, and each of the 5 measurements was the result of making 2 readings. As such,
+
+\begin{align*}
+    \sigma_\text{reading} &= \frac{1}{N} \sqrt{\sum (2\sigma^2)} \\
+    &= \frac{1}{5} \sqrt{10(\qty{0.5}{\milli\metre})^2} \\
+    &= \qty{0.316}{\milli\metre};
+\end{align*}    
+
+the standard deviation was
+
+\begin{align*}
+    \sigma_\text{st. dev.} &= \sqrt{\frac{\sum (s_i - f_\text{DO})^2}{N-1}} \\
+    &= \sqrt{\frac{(\qty{5}{\milli\metre})^2 + (\qty{5}{\milli\metre})^2 + + (\qty{0}{\milli\metre})^2 + (\qty{5}{\milli\metre})^2 + (\qty{5}{\milli\metre})^2}{4}} \\
+    &= \qty{5}{\milli\metre};
+\end{align*}
+
+and the systematic error was 
+
+\begin{align*}
+    \sigma_\text{sys} &= \frac{f_\text{DO}^2}{\qty{2500}{\milli\metre} - f_\text{DO}} \\
+    &= \frac{(\qty{195}{\milli\metre})^2}{\qty{2305}{\milli\metre}} \\
+    &= \qty{16.5}{\milli\metre}.
+\end{align*}
+
+Since the systematic error is the highest of these, we take $\sigma_\text{DO} = \sigma_\text{sys}$ and
+
+\[f_\text{DO} = (195 \pm 17) \unit{\milli\metre}.\]
+
+%----------------------------------------------------------------------------------------
 
 \section{Mirror Method}
+The object distance was found by subtracting the object positions from the image positions from \cref{tab:infinityimage}, and the results summarized in \cref{tab:mirrorobjdistances}.
 
-\section{Thin Lens (Imprecise)}
+\lrtable{mirrorobjdistances}
+{Results of object distance calculations for mirror method}
+{2}{Trial & $s_o [\unit{\milli\metre}]$}
+{%
+1 & 193 \\
+2 & 196 \\
+3 & 195 \\
+4 & 195 \\
+5 & 193 %
+}
 
-\section{Thin Lens and Magnification}
+By the same method as in \textbf{Distant Object}, we find $f_\text{MM} = \qty{194.6}{\milli\metre}$, $\sigma_\text{reading} = \qty{0.316}{\milli\metre}$, and $\sigma_\text{st. dev.} = \qty{1.14}{\milli\metre}$. Since $\sigma_\text{st. dev.} > 2\sigma_\text{reading}$, we take $\sigma_\text{MM} = \sigma_\text{st. dev.}$ and obtain
+
+\[f_\text{MM} = (194.6 \pm 1.1) \unit{\milli\metre}.\]
+
+%----------------------------------------------------------------------------------------
+
+\section{Thin Lens (Individual)}
+As in the mirror method, the object distance was found by taking the difference between the lens and object positions; similarly, image distance was found by taking the difference between the image and lens. The values were taken from \cref{tab:thinlens}, and the results obtained are summarized in \cref{tab:thinlensdistances}.
+
+\lrtable{thinlensdistances}
+{Results of distance calculations for thin lens method (individual)}
+{3}{Trial & $s_o [\unit{\milli\metre}]$ & $s_i [\unit{\milli\metre}]$}
+{%
+1  & 400 & 390   \\
+2  & 350 & 452   \\
+3  & 450 & 357.5 \\
+4  & 500 & 333   \\
+5  & 370 & 424   \\
+6  & 390 & 402   \\
+7  & 410 & 388   \\
+8  & 430 & 370   \\
+9  & 330 & 486.5 \\
+10 & 310 & 538   %
+}
+
+As in the previous two methods, the reading error on each of these is $\sigma_s = \sqrt{2\left(\frac{1}{2}\right)^2} = \qty{0.707}{\milli\metre}$.
+
+From these values, the focal length $f$ is found by \cref{eqn:thinlens}:
+
+\lrsamplethinlens{\qty{197.47}{\milli\metre}}
+{{\left(\qty{400}{\milli\metre}\right)}{\left(\qty{390}{\milli\metre}\right)}}
+
+and the error by
+
+\begin{align*}
+    \sigma_f &= \frac{\sigma_s}{s_o + s_i} \sqrt{s_i^2 + s_o^2} \\
+    &= \frac{\qty{0.707}{\milli\metre}}{\qty{400}{\milli\metre} + \qty{390}{\milli\metre}} \sqrt{\left(\qty{400}{\milli\metre}\right)^2 + \left(\qty{390}{\milli\metre}\right)^2} \\
+    &= \qty{0.5}{\milli\metre}.
+\end{align*}
+
+The results of these calculations are summarized in \cref{tab:thinlensfocals}. Fun fact: as $s_i \to s_o$, $\sigma_f \to \qty{0.5}{\milli\metre}$. The proof is left as an exercise to the reader :)
+
+\lrtable{thinlensfocals}
+{Results of focal length calculations for thin lens method (individual)}
+{3}{Trial & $f [\unit{\milli\metre}]$ & $\sigma_f [\unit{\milli\metre}]$}
+{%
+1  & 197.47 & 0.50 \\
+2  & 197.26 & 0.50 \\
+3  & 199.23 & 0.50 \\
+4  & 199.88 & 0.51 \\
+5  & 197.58 & 0.50 \\
+6  & 197.95 & 0.50 \\
+7  & 199.35 & 0.50 \\
+8  & 198.88 & 0.50 \\
+9  & 196.63 & 0.51 \\
+10 & 196.67 & 0.52 %
+}
+
+From here we take the average, reading uncertainty, and standard deviation as in \textbf{Distant Object} to find $f_\text{TLI} = \qty{198.09}{\milli\metre}$, $\sigma_\text{reading} = \qty{0.16}{\milli\metre}$, and $\sigma_\text{st. dev.} = \qty{1.16}{\milli\metre}$. Since $\sigma_\text{st. dev.} > 2\sigma_\text{reading}$, we take $\sigma_\text{TLI} = \sigma_\text{st. dev.}$ and obtain
+
+\[f_\text{TLI} = (198.1 \pm 1.2) \unit{\milli\metre}.\]
+
+%----------------------------------------------------------------------------------------
+
+\section{Thin Lens and Magnification (Plotted)}
+First, the width of the lens was found by subtracting the distance without it from the distance with it (from \cref{tab:vpconstants}), and its error as in \textbf{Distant Object}. It was found to be $d_\text{lens} = \qty{107}{\milli\metre} - \qty{101}{\milli\metre} \pm \sqrt{4(\qty{0.5}{\milli\metre})} = (6.0 \pm 1.0) \unit{\milli\metre}$.
+
+Because of how they were measured, each object distance was calculated by
+
+\begin{align*}
+    s_o &= V_2 - V_1 + d_\text{vp} + \frac{d_\text{lens}}{2} \\
+    &= \qty{516}{\milli\metre} - \qty{221}{\milli\metre} + \qty{152.47}{\milli\metre} + \frac{\qty{6}{\milli\metre}}{2} \\
+    &= \qty{450.47}{\milli\metre}
+\end{align*}
+
+and similarly for image distance, each with reading error 
+
+\begin{align*}
+    \sigma_s &= \sqrt{\sigma_{V_1}^2 + \sigma_{V_2}^2 + \sigma_\text{vp}^2 + \frac{\sigma_\text{lens}^2}{4}} \\
+    &= \sqrt{\frac{1}{2} + \frac{1}{2} + \frac{1}{2500} + \frac{1}{4}} \\
+    &= \qty{1.118}{\milli\metre}.
+\end{align*}
+
+From these, $\frac{1}{s_o}, \frac{1}{s_i}$ were found simply by inversion.
+
+Finally, magnification was found by \cref{eqn:magnification}:
+
+\begin{align*}
+    \frac{1}{M} &= \frac{h_o}{h_i} \\
+    &= \frac{\qty{19.5}{\milli\metre}}{-\qty{15}{\milli\metre}} \\
+    &= -1.3.
+\end{align*}
+
+with error
+
+\begin{align*}
+    \sigma_\frac{1}{M} &= \frac{\sigma_h}{h_i} \sqrt{1 + \left(\frac{1}{M}\right)^2} \\
+    &= \frac{\qty{0.707}{\milli\metre}}{-\qty{15}{\milli\metre}} \sqrt{1 + 1.3^2} \\
+    &= -0.0773.
+\end{align*}
+
+The results of all these calculations are summarized in \cref{tab:vptlvalues} and \cref{tab:vpmagvalues}.
+
+\lrtable{vptlvalues}
+{Values to plot in thin lens (plotted) method}
+{5}{Trial & $\frac{1}{s_i} [\unit{\per\milli\metre}]$ & $\frac{1}{s_o} [\unit{\per\milli\metre}]$ & $\sigma_\frac{1}{s_i} [\unit{\per\milli\metre}]$ & $\sigma_\frac{1}{s_o} [\unit{\per\milli\metre}]$}
+{%
+1 & 2.22E-03 & 2.88E-03 & 6.97E-06 & 1.17E-05 \\
+2 & 2.32E-03 & 2.78E-03 & 7.61E-06 & 1.09E-05 \\
+3 & 2.43E-03 & 2.64E-03 & 8.35E-06 & 9.85E-06 \\
+4 & 2.56E-03 & 2.55E-03 & 9.25E-06 & 9.21E-06 \\
+5 & 2.69E-03 & 2.65E-03 & 1.02E-05 & 9.93E-06 \\
+6 & 2.85E-03 & 2.29E-03 & 1.14E-05 & 7.41E-06 \\
+7 & 3.02E-03 & 2.09E-03 & 1.29E-05 & 6.19E-06 \\
+8 & 3.23E-03 & 1.57E-03 & 1.47E-05 & 3.49E-06 \\
+9 & 2.09E-03 & 2.96E-03 & 6.15E-06 & 1.24E-05 %
+}
+
+\lrtable{vpmagvalues}
+{Values to plot in magnification method}
+{5}{Trial & $s_o [\unit{\milli\metre}]$ & $\frac{1}{M}$ & $\sigma_{s_o} [\unit{\milli\metre}]$ & $\sigma_\frac{1}{M}$}
+{%
+1 & 450.470 & -1.300 & 1.118 & -0.077 \\
+2 & 430.970 & -1.219 & 1.118 & -0.070 \\
+3 & 411.470 & -1.114 & 1.118 & -0.060 \\
+4 & 390.970 & -1.026 & 1.118 & -0.053 \\
+5 & 371.470 & -0.929 & 1.118 & -0.046 \\
+6 & 351.470 & -0.780 & 1.118 & -0.036 \\
+7 & 330.970 & -0.709 & 1.118 & -0.032 \\
+8 & 309.970 & -0.591 & 1.118 & -0.025 \\
+9 & 479.470 & -1.393 & 1.118 & -0.087 %
+}
+
+\begin{figure}[htbp!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    domain=0.001571166:0.002963226,
+    title=Finding $f$ by Thin Lens Equation,
+    xlabel={$\frac{1}{s_i} [\unit{\milli\metre}]$},
+    ylabel={$\frac{1}{s_o} [\unit{\milli\metre}]$},
+    legend pos=north east,
+    legend entries={Calculated Data,Line of Best Fit},
+    ]
+    \addplot table [only marks,x=1/s_i,y=1/s_o] {thinlens.txt};
+    \addplot[red] {-0.8484986304*x + 0.0046846376};
+    \addplot[mark=x,mark size=6pt,red] coordinates {(0.002649217,0.002692007)};
+\end{axis}
+\end{tikzpicture}
+\caption{Plot of the values from \cref{tab:vptlvalues}}
+\end{figure}
+
+\begin{figure}[htbp!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    domain=309.97:479.47,
+    title=Finding $f$ by Magnification,
+    xlabel={$s_o [\unit{\milli\metre}]$},
+    ylabel={$\frac{1}{M} [\unit{\milli\metre}]$},
+    legend pos=north east,
+    legend entries={Calculated Data,Line of Best Fit},
+    ]
+    \addplot table [only marks,x=s_o,y=1/M] {magnification.txt};
+    \addplot[red] {-0.004878207*x + 0.90508659};
+\end{axis}
+\end{tikzpicture}
+\caption{Plot of the values from \cref{tab:vpmagvalues}}
+\end{figure}
+
+Following the Least Squares Method, the delta value was calculated for the magnification method by
+\begin{align*}
+    \Delta &= N \sum^N s_o^2 - \left(\sum^N s_o\right)^2 \\
+    &= 9 \left(\left(\qty{450.47}{\milli\metre}\right)^2 + \left(\qty{430.97}{\milli\metre}\right)^2 + \cdots \right)  - \left(\qty{450.47}{\milli\metre} + \qty{430.97}{\milli\metre} + \cdots \right)^2 \\
+    &= \qty{229376}{\milli\metre \squared}.
+\end{align*}
+
+With the delta value in hand, the slope was calculated by
+\begin{align*}
+    m &= \frac{1}{\Delta} \left(N \sum^N s_o \frac{1}{M} - \sum^N s_o \sum^N \frac{1}{M}\right) \\
+    &= \frac{1}{\qty{229376}{\milli\metre \squared}} \left(9 \left(\left(\qty{450.47}{\milli\metre}\right)\left(-1.3\right) + \cdots\right) - \left(\qty{450.47}{\milli\metre} + \cdots\right)\left(-1.3 + \cdots\right)\right) \\
+    &= -\qty{0.00488}{\per \milli\metre},
+\end{align*}
+
+and the intercept by
+\begin{align*}
+    b &= \frac{1}{\Delta} \left(\sum^N s_o^2 \sum^N \frac{1}{M} - \sum^N s_o \sum^N s_o \frac{1}{M}\right) \\
+    &= \frac{1}{\qty{229376}{\milli\metre \squared}} \left(\left(\left(\qty{450.47}{\milli\metre}\right)^2 + \cdots\right)\left(-1.3 + \cdots\right) - \left(\qty{450.47}{\milli\metre} + \cdots\right)\left(\left(\qty{450.47}{\milli\metre}\right)\left(-1.3\right) + \cdots\right)\right) \\
+    &= 0.905.
+\end{align*}
+
+These values were also determined for the thin lens plot by the same procedure, and the results summarized in \cref{tab:LSM}. Note that one point was excluded (shown in the figure) since it is an outlier.
+
+\lrtable{LSM}
+{Slope and intercept values for lines of best fit}
+{5}{Method & $m$ & $b$ & $\sigma_m$ & $\sigma_b$}
+{%
+    Thin Lens & -0.848 & \qty{0.00468}{\per \milli\metre} & 1.55 & \qty{0.00389}{\per \milli\metre} \\
+    Magnification & -\qty{0.00488}{\per \milli\metre} & 0.905 & \qty{0.000159}{\per \milli\metre} & 0.06298 %
+}
+
+Finally, we invert the Thin Lens intercept and the Magnification slope to obtain:
+
+\[f_\text{TLP} = (210 \pm 180) \unit{\milli\metre}\]
+\[f_\text{MAG} = (205 \pm 7) \unit{\milli\metre}\]
+
+(for $f = \frac{1}{x}$, $\sigma_f = \frac{\sigma_x}{x^2}$)
+
+%----------------------------------------------------------------------------------------
 
 \section{Lensmaker}
+
+We calculate the radius of curvature from the spherometer readings by \cref{eqn:spherometer}
+
+\lrsamplespherometer{\qty{189.6}{\milli\metre}}
+{{\left(\qty{1.34}{\milli\metre}\right)}{\left(\qty{22.5}{\milli\metre}\right)}}
+
+with error
+
+\begin{align*}
+    \sigma_R &= \sqrt{\frac{\left(r^2 - d^2\right)^2}{4r^4}\sigma_r^2 + \frac{d^2}{r^2}\sigma_d^2} \\
+    &= \sqrt{\frac{\left(\left(\qty{1.34}{\milli\metre}\right)^2 - \left(\qty{22.5}{\milli\metre}\right)^2\right)^2}{4\left(\qty{1.34}{\milli\metre}\right)^4}\left(\qty{0.025}{\milli\metre}\right)^2 + \frac{\left(\qty{22.5}{\milli\metre}\right)^2}{\left(\qty{1.34}{\milli\metre}\right)^2}\left(\qty{0.707}{\milli\metre}\right)^2} \\
+    &= \qty{12.4}{\milli\metre}
+\end{align*}
+
+making sure to respect the sign convention. With the radii in hand, then the focal length for each trial is calculated by \cref{eqn:lensmaker}
+
+\lrsamplelensmaker{\qty{179.39}{\milli\metre}}
+{{\left(\qty{189.6}{\milli\metre}\right)}{\left(-\qty{180.2}{\milli\metre}\right)}{1.51502}}
+
+with error
+
+\begin{align*}
+    \sigma_f &= \frac{\sqrt{R_2^2 \sigma_{R_1}^2 + R_1^2 \sigma_{R_2}^2}}{(n-1)|R_2 - R_1|} \\
+    &= \frac{\sqrt{\left(\qty{-180.2}{\milli\metre}\right)^2 \left(\qty{12.4}{\milli\metre}\right)^2 + \left(\qty{189.6}{\milli\metre}\right)^2 \left(\qty{11.7}{\milli\metre}\right)^2}}{(n-1)|\qty{-180.2}{\milli\metre} - \qty{189.6}{\milli\metre}|} \\
+    &= \qty{16.5}{\milli\metre}
+\end{align*}
+
+The full results of these calculations are summarized in \cref{tab:lensmakerfocals}
+
+\lrtable{lensmakerfocals}
+{Results of focal length calculations for lensmaker method}
+{7}{Trial & $R_1 [\unit{\milli\metre}]$ & $R_2 [\unit{\milli\metre}]$ & $\sigma_{R_1} [\unit{\milli\metre}]$ & $\sigma_{R_2} [\unit{\milli\metre}]$ & $f [\unit{\milli\metre}]$ & $\sigma_f [\unit{\milli\metre}]$}
+{%
+1 & 189.5693 & -180.226 & 12.38151 & 11.72059 & 179.3908 & 16.5343  \\
+2 & 199.1669 & -195.362 & 13.06773 & 12.79475 & 191.4934 & 17.7524  \\
+3 & 198.3939 & -197.627 & 13.01218 & 12.95711 & 192.2349 & 17.82745 %
+}
+
+For our final focal length, we take the average of these values, and as in \textbf{Distant Object}, obtain $f_\text{LNS} = \qty{187.7}{\milli\metre}$, $\sigma_\text{reading} = \qty{10}{\milli\metre}$, and $\sigma_\text{st. dev.} = \qty{7.2}{\milli\metre}$. Since $\sigma_\text{st. dev.} \leq 2\sigma_\text{reading}$, we take $\sigma_\text{LNS} = \sigma_\text{reading}$, and obtain
+
+\[f_\text{LNS} = (188 \pm 10) \unit{\milli\metre}.\]
+
+%----------------------------------------------------------------------------------------
+
+\section{Combination of Measurements}
+Happily, all of our results are in agreement! In particular, note $f = \qty{196}{\milli\metre}$ is within two uncertainties of every value.
+As such, we include them all in our weighted average, as follows:
+
+\begin{align*}
+    f_\text{weighted average} &= \frac{\sum \frac{f}{\sigma_f^2}}{\sum \frac{1}{\sigma_f^2}} \\
+    &= \frac{\frac{\qty{195}{\milli\metre}}{\left(\qty{17}{\milli\metre}\right)^2} + \frac{\qty{194.6}{\milli\metre}}{\left(\qty{1.1}{\milli\metre}\right)^2} + \cdots}{\frac{1}{\left(\qty{17}{\milli\metre}\right)^2} + \frac{1}{\left(\qty{1.1}{\milli\metre}\right)^2} + \cdots} \\
+    &= \qty{196.2}{\milli\metre}
+\end{align*}
+
+with error 
+
+\begin{align*}
+    \sigma_\text{weighted} &= \frac{1}{\sqrt{\sum \frac{1}{\sigma_f^2}}} \\
+    &= \frac{1}{\sqrt{\frac{1}{\left(\qty{17}{\milli\metre}\right)^2} + \frac{1}{\left(\qty{1.1}{\milli\metre}\right)^2} + \cdots}} \\
+    &= \qty{0.8}{\milli\metre}
+\end{align*}
+
+for a final value of
+
+\[f = (196.2 \pm 0.8) \unit{\milli\metre}.\]
