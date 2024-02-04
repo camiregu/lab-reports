@@ -15,34 +15,31 @@
 
 
 %%% 3rd party packages
+% for advanced commands
+\RequirePackage{pgfkeys}
+\RequirePackage{xifthen}
+\RequirePackage{etoolbox}
 % for page formatting
-\RequirePackage{geometry}
 \RequirePackage{multicol}
 % for heading formatting
 \RequirePackage{titlesec}
 % for images
-\usepackage{import}
-\usepackage{xifthen}
-\usepackage{pdfpages}
-\usepackage{transparent}
+\RequirePackage{import}
 % for units and tables
 \RequirePackage{siunitx}
+\RequirePackage{underscore}
+% pgf packages for plots and tables
+\RequirePackage{pgfplots}
+\RequirePackage{pgfplotstable}
 \RequirePackage{tabularx}
 \RequirePackage{caption}
-% pgf packages for plots
-\RequirePackage{pgfplots}
 % ams packages for environments, shortcuts, and fonts
 \RequirePackage{amsmath}
 \RequirePackage{amsfonts}
-% for enumerated lists
-\RequirePackage{enumitem}
 % for better referencing (consider hyperref and varref)
 \RequirePackage[hidelinks]{hyperref}
 \RequirePackage{varioref}
 \RequirePackage{cleveref}
-% for pretty colors
-\RequirePackage{tcolorbox}
-\tcbuselibrary{most}
 
 
 %%% Fix chapter heading
@@ -62,7 +59,7 @@
 
 %%% Formatting commands
 %% Create title page
-\renewcommand{\maketitle}{
+\renewcommand{\maketitle}{%
     \begin{center}
         \textbf{\Huge{\Experiment}}\\[1.5\baselineskip]
         \vspace{11mm}
@@ -78,12 +75,12 @@
     \newpage
 }
 
-% Define typographic struts, as suggested by Claudio Beccari in an article in TeX and TUG News, Vol. 2, 1993.
+%% Define typographic struts, as suggested by Claudio Beccari in an article in TeX and TUG News, Vol. 2, 1993.
 \newcommand\Tstrut{\rule{0pt}{2.6ex}}         % = `top' strut
 \newcommand\Bstrut{\rule[-1.4ex]{0pt}{0pt}}   % = `bottom' strut
 
 %%% Commands for Lab Report elements
-% Usage: \lrequation{<label>}{<symbol>}{<varnum>}{<eqn>}{<varsymbols>}
+%% Usage: \lrequation{<label>}{<symbol>}{<varnum>}{<eqn>}{<varsymbols>}
 \newcommand{\lrequation}[5]{%
     % Usage: \#1eqn{<var1>}{<var2>}{<var3>}...
     \expandafter\newcommand\csname #1eqn\endcsname[#3]{#4}
@@ -104,9 +101,8 @@
     }
 }
 
-% Usage: \lrfigure[placement]{<label>}{<caption>}
-\newcommand{\lrfigure}[3][!htbp]
-{
+%% Usage: \lrfigure[placement]{<label>}{<caption>}
+\newcommand{\lrfigure}[3][!htbp]{%
     \begin{figure}[#1]
         \centering
         \def\svgwidth{\columnwidth}
@@ -115,24 +111,68 @@
         \label{fig:#2}
     \end{figure}
 }
- 
-% Usage: \begin{lrtable}[<placement>]{<label>}{<caption>}{<numcolumns>}{<titles>}{<data>}
-\newcommand{\lrtable}[6][!htbp]
-{
-\begin{table}[#1]
-\centering
-\begin{tabular}{|| *{#4}{c} ||}
-    \hline %
-    \Tstrut#5\Bstrut\\ %
-    \hline\hline %
-    \Tstrut#6\Bstrut\\ %
-    \hline %
-\end{tabular}
-\caption{#3}
-\label{tab:#2}
-\end{table}
+
+%% Usage: \begin{lrtable}[<placement>]{<label>}{<filename>}{<caption>} \lrcolumn* \lrcolumn \end{lrtable}
+\NewDocumentEnvironment{lrtable}{O{!htbp} mmm}{%
+    \begin{table}[#1]
+    \centering
+    \pgfkeys{/pgfplots/table/.cd, columns={}}
+}{%
+    \pgfplotstabletypeset[
+    % Table formatting
+    every head row/.style={before row=\hline\Tstrut\Bstrut, after row=\hline\hline\Tstrut},
+    every last row/.style={before row=\Bstrut, after row=\hline},
+    every first column/.style={
+        column type/.add={||}{}
+    },
+    every last column/.style={
+        column type/.add={}{||}
+    },
+    ]{"\Experiment/Tables/#3.txt"}
+    \caption{#4}
+    \label{tab:#2}
+    \end{table}
+}
+% Usage: \lrcolumn{<colname>}[<display name>]<<precision>>
+\NewDocumentCommand{\lrcolumn}{s o d<> m}{%
+    \IfBooleanTF{#1}{% First column needs a star because I don't know how to check empty!
+        \pgfkeys{/pgfplots/table/.cd, columns={#4}}
+    }{%
+        \pgfkeys{/pgfplots/table/.cd,columns/.add={}{,#4}}
+    }
+    % Change column name
+    \IfValueT{#2}{%
+    \pgfkeys{/pgfplots/table/.cd,
+    columns/{#4}/.append style={
+        column name=#2,
+    }}
+    }
+    % Change column precision
+    \IfValueT{#3}{%
+    \pgfkeys{/pgfplots/table/.cd,
+    columns/{#4}/.append style={
+        precision=#3,
+    }}
+    }
 }
 
-\newenvironment{lrapparatus}
-{\begin{multicols}{2} \begin{itemize}}
-{\end{itemize} \end{multicols}}
+%% Usage: \begin{lrapparatus} \item <item> \item <item> \end{lrapparatus}
+\NewDocumentEnvironment{lrapparatus}{}{%
+    \begin{multicols}{2} \begin{itemize}
+}{%
+    \end{itemize} \end{multicols}
+}
+
+%% Usage: \begin{lrplot}[<placement>]{<label>}{<caption>} \end{lrplot}
+\NewDocumentEnvironment{lrplot}{O{!htbp} mm}{%
+    \begin{figure}[#1]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}
+}{%
+    \end{axis}
+    \end{tikzpicture}
+    \caption{#3}
+    \label{fig:#2}
+    \end{figure}
+}

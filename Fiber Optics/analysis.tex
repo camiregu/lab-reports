@@ -1,0 +1,46 @@
+% camiregu 2024-jan-14
+\chapter{Data analysis}
+
+%----------------------------------------------------------------------------------------
+\section{Part 1}
+
+%----------------------------------------------------------------------------------------
+\section{Part 2}
+
+\begin{lrtable}{vptlvalues}{table}
+{Values to plot in thin lens (plotted) method}
+    \lrcolumn*{Trial}
+    \lrcolumn[$\frac{1}{s_o} [\unit{\per\milli\metre}]$]<3>{1/s_o}
+    \lrcolumn[$\frac{1}{s_i} [\unit{\per\milli\metre}]$]<3>{1/s_i}
+\end{lrtable}
+
+\begin{lrplot}{thinlens}
+{Plot of the values from \cref{tab:vptlvalues}}
+    [domain=0.001571166:0.002963226,
+    title=Finding $f$ by Thin Lens Equation,
+    xlabel={$\frac{1}{s_i} [\unit{\milli\metre}]$},
+    ylabel={$\frac{1}{s_o} [\unit{\milli\metre}]$},
+    legend pos=north east,
+    legend entries={Calculated Data,Line of Best Fit},]
+
+    \addplot[only marks] table[x=1/s_i,y=1/s_o] {"\Experiment/Tables/table.txt"};
+    \addplot[red] {-0.8484986304*x + 0.0046846376};
+    \addplot[mark=x,mark size=6pt,red] coordinates {(0.002649217,0.002692007)};
+\end{lrplot}
+
+We calculate the radius of curvature from the spherometer readings by \cref{eqn:spherometer}
+
+\lrsamplespherometer{\qty{189.6}{\milli\metre}}
+{{\left(\qty{1.34}{\milli\metre}\right)}{\left(\qty{22.5}{\milli\metre}\right)}}
+
+with error
+
+\begin{align*}
+    \sigma_R &= \sqrt{\frac{\left(r^2 - d^2\right)^2}{4r^4}\sigma_r^2 + \frac{d^2}{r^2}\sigma_d^2} \\
+    &= \sqrt{\frac{\left(\left(\qty{1.34}{\milli\metre}\right)^2 - \left(\qty{22.5}{\milli\metre}\right)^2\right)^2}{4\left(\qty{1.34}{\milli\metre}\right)^4}\left(\qty{0.025}{\milli\metre}\right)^2 + \frac{\left(\qty{22.5}{\milli\metre}\right)^2}{\left(\qty{1.34}{\milli\metre}\right)^2}\left(\qty{0.707}{\milli\metre}\right)^2} \\
+    &= \qty{12.4}{\milli\metre}
+\end{align*}
+
+making sure to respect the sign convention. For our final focal length, we obtain $f_\text{LNS} = \qty{187.7}{\milli\metre}$, $\sigma_\text{reading} = \qty{10}{\milli\metre}$, and $\sigma_\text{st. dev.} = \qty{7.2}{\milli\metre}$. Since $\sigma_\text{st. dev.} \leq 2\sigma_\text{reading}$, we take $\sigma_\text{LNS} = \sigma_\text{reading}$, and obtain
+
+\[f_\text{LNS} = (188 \pm 10) \unit{\milli\metre}.\]

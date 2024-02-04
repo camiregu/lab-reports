@@ -1,0 +1,27 @@
+% camiregu 2024-jan-14
+\chapter{Introduction}
+
+%----------------------------------------------------------------------------------------
+\section{Objectives}
+
+%----------------------------------------------------------------------------------------
+\section{Part 1}
+
+%----------------------------------------------------------------------------------------
+\section{Part 2}
+The lensmaker equation gives us a way to find the focal point of a double lens based on its geomtry. In particular,
+
+\[ \frac{1}{f} = \left(n-1\right)\left(\frac{1}{R_1} - \frac{1}{R_2}\right) \]
+\[ \Downarrow \]
+
+\lrequation{lensmaker}{f}
+{3}{\frac{#1 #2}{\left(#2 - #1\right)\left(#3 - 1\right)}}
+{{R_1}{R_2}{n}}
+
+where $R_1, R_2$ are the radii of curvature of each side of the lens, and $n$ is the refractive index of the lens' material. Using a spherometer, these radii are found by
+
+\lrequation{spherometer}{R}
+{2}{\frac{#1^2 + #2^2}{2#1}}
+{{r}{d}}
+
+where $r$ is the spherometer reading, and $d$ is the distance from the leg of the spherometer to the screw. So by simply taking some readings of the lens using the spherometer, we are able to find its focal length.

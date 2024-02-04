@@ -159,20 +159,12 @@ with error
 
 The results of all these calculations are summarized in \cref{tab:vptlvalues} and \cref{tab:vpmagvalues}.
 
-\lrtable{vptlvalues}
+\begin{Lrtable}{vptlvalues}{thinlens}
 {Values to plot in thin lens (plotted) method}
-{5}{Trial & $\frac{1}{s_i} [\unit{\per\milli\metre}]$ & $\frac{1}{s_o} [\unit{\per\milli\metre}]$ & $\sigma_\frac{1}{s_i} [\unit{\per\milli\metre}]$ & $\sigma_\frac{1}{s_o} [\unit{\per\milli\metre}]$}
-{%
-1 & 2.22E-03 & 2.88E-03 & 6.97E-06 & 1.17E-05 \\
-2 & 2.32E-03 & 2.78E-03 & 7.61E-06 & 1.09E-05 \\
-3 & 2.43E-03 & 2.64E-03 & 8.35E-06 & 9.85E-06 \\
-4 & 2.56E-03 & 2.55E-03 & 9.25E-06 & 9.21E-06 \\
-5 & 2.69E-03 & 2.65E-03 & 1.02E-05 & 9.93E-06 \\
-6 & 2.85E-03 & 2.29E-03 & 1.14E-05 & 7.41E-06 \\
-7 & 3.02E-03 & 2.09E-03 & 1.29E-05 & 6.19E-06 \\
-8 & 3.23E-03 & 1.57E-03 & 1.47E-05 & 3.49E-06 \\
-9 & 2.09E-03 & 2.96E-03 & 6.15E-06 & 1.24E-05 %
-}
+    \lrcolumn*{Trial}
+    \lrcolumn[$\frac{1}{s_o} [\unit{\per\milli\metre}]$]<3>{1/s_o}
+    \lrcolumn[$\frac{1}{s_i} [\unit{\per\milli\metre}]$]<3>{1/s_i}
+\end{Lrtable}
 
 \lrtable{vpmagvalues}
 {Values to plot in magnification method}
@@ -189,42 +181,32 @@ The results of all these calculations are summarized in \cref{tab:vptlvalues} an
 9 & 479.470 & -1.393 & 1.118 & -0.087 %
 }
 
-\begin{figure}[htbp!]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    domain=0.001571166:0.002963226,
+\begin{lrplot}{thinlens}
+{Plot of the values from \cref{tab:vptlvalues}}
+    [domain=0.001571166:0.002963226,
     title=Finding $f$ by Thin Lens Equation,
     xlabel={$\frac{1}{s_i} [\unit{\milli\metre}]$},
     ylabel={$\frac{1}{s_o} [\unit{\milli\metre}]$},
     legend pos=north east,
-    legend entries={Calculated Data,Line of Best Fit},
-    ]
-    \addplot table [only marks,x=1/s_i,y=1/s_o] {thinlens.txt};
+    legend entries={Calculated Data,Line of Best Fit},]
+
+    \addplot[only marks] table[x=1/s_i,y=1/s_o] {"\Experiment/Tables/thinlens.txt"};
     \addplot[red] {-0.8484986304*x + 0.0046846376};
     \addplot[mark=x,mark size=6pt,red] coordinates {(0.002649217,0.002692007)};
-\end{axis}
-\end{tikzpicture}
-\caption{Plot of the values from \cref{tab:vptlvalues}}
-\end{figure}
+\end{lrplot}
 
-\begin{figure}[htbp!]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    domain=309.97:479.47,
+\begin{lrplot}{magnification}
+{Plot of the values from \cref{tab:vpmagvalues}}
+    [domain=309.97:479.47,
     title=Finding $f$ by Magnification,
     xlabel={$s_o [\unit{\milli\metre}]$},
     ylabel={$\frac{1}{M} [\unit{\milli\metre}]$},
     legend pos=north east,
-    legend entries={Calculated Data,Line of Best Fit},
-    ]
-    \addplot table [only marks,x=s_o,y=1/M] {magnification.txt};
+    legend entries={Calculated Data,Line of Best Fit},]
+
+    \addplot[only marks] table[x=s_o,y=1/M] {"\Experiment/Tables/magnification.txt"};
     \addplot[red] {-0.004878207*x + 0.90508659};
-\end{axis}
-\end{tikzpicture}
-\caption{Plot of the values from \cref{tab:vpmagvalues}}
-\end{figure}
+\end{lrplot}
 
 Following the Least Squares Method, the delta value was calculated for the magnification method by
 \begin{align*}
